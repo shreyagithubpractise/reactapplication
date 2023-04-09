@@ -1,24 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import "./App.css";
+import NavBar from "./components/NavBar";
+import TextForm from "./components/TextForm";
+import About from "./components/About";
+import { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
+  const [mode, setMode] = useState("light");
+  const handleTheme = () => {
+    if (mode === "light") {
+      document.body.style.backgroundColor = "#042743";
+      setMode("dark");
+    } else {
+      document.body.style.backgroundColor = "#ffffff";
+      setMode("light");
+    }
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="blank">
+        <NavBar title="TextUtils" mode={mode} displayMode={handleTheme} />
+        <Routes>
+          <Route
+            path="/"
+            element={<TextForm heading="Enter Your Text Here" mode={mode} />}
+          ></Route>
+          <Route
+            path="/textform"
+            element={<TextForm heading="Enter Your Text Here" mode={mode} />}
+          ></Route>
+          <Route path="/about" element={<About />}></Route>
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
